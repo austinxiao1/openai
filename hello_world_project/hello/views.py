@@ -24,7 +24,7 @@ def openai(request):
 
 def openai_models(request):
     model_list = openai_api.get_model_list()
-    print("model_list:", model_list["data"])
+    # print("model_list:", model_list["data"])
     return render(request, "hello/openai_models.html", {'model_list': model_list["data"]})
 
 

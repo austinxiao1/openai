@@ -1,14 +1,14 @@
 import os
 import openai
 
-openai.organization = "org-547KC0rnKSUBHnVItpy5Z1kf"
-# openai.api_key = "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"
-def get_model_list():
+openai.organization = "org-547KC0rnKSUBHnVItpy5Z1kf" 
+key_os = os.environ["OPENAI_API_KEY"] 
+openai.api_key=key_os
+def get_model_list(): 
     return openai.Model.list()
 
 
-def get_answer(question: str, model: str = "text-davinci-003"):
-    openai.api_key = "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" 
+def get_answer(question: str, model: str = "text-davinci-003"): 
     response = openai.Completion.create(
         model=model,
         prompt=question,
@@ -21,8 +21,7 @@ def get_answer(question: str, model: str = "text-davinci-003"):
     return response
 
 
-def get_code(question: str, model: str = "code-davinci-002"):
-    openai.api_key = "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" 
+def get_code(question: str, model: str = "code-davinci-002"): 
     response = openai.Completion.create(
         model=model,
         prompt=question,
