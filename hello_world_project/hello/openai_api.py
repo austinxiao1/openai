@@ -3,12 +3,12 @@ import openai
 
 openai.organization = "org-547KC0rnKSUBHnVItpy5Z1kf"
 # openai.api_key = "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"
-openai.api_key = "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" 
 def get_model_list():
     return openai.Model.list()
 
 
 def get_answer(question: str, model: str = "text-davinci-003"):
+    openai.api_key = "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" 
     response = openai.Completion.create(
         model=model,
         prompt=question,
@@ -22,6 +22,7 @@ def get_answer(question: str, model: str = "text-davinci-003"):
 
 
 def get_code(question: str, model: str = "code-davinci-002"):
+    openai.api_key = "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" 
     response = openai.Completion.create(
         model=model,
         prompt=question,
