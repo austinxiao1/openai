@@ -1,11 +1,12 @@
 import json
+from django.http import Http404, HttpResponse
 from django.shortcuts import HttpResponseRedirect, get_object_or_404, redirect, render
 from django.utils.timezone import datetime
 from django.views.generic import ListView
 from hello import openai_api
 
-from hello.forms import LogMessageForm, OpenAIPlayForm
-from hello.models import LogMessage, OpenAIPlay
+from hello.forms import LogMessageForm, LoginForm, OpenAIPlayForm
+from hello.models import LogMessage, OpenAIPlay, User
 
 
 class HomeListView(ListView):
@@ -50,6 +51,8 @@ def hello_there(request, name):
 
 
 def openai_play_create(request):
+    if not validate_login(request):
+        return HttpResponseRedirect("/login")
     form = OpenAIPlayForm(request.POST or None)
     print("openai_play:")
 
@@ -57,25 +60,26 @@ def openai_play_create(request):
         if form.is_valid():
             play = form.save(commit=False)
 
-            answer_in_db = OpenAIPlay.objects.filter(question__iexact=play.question)
-            if len(answer_in_db) >0:
+            answer_in_db = OpenAIPlay.objects.filter(
+                question__iexact=play.question)
+            if len(answer_in_db) > 0:
                 return redirect("play/"+str(answer_in_db[0].id))
 
             play.create_date = datetime.now()
-            
+
             print("asking question:", play.question)
             if play.model == "code-davinci-002":
                 response = openai_api.get_code(play.question, play.model)
             else:
-                response = openai_api.get_answer(play.question, play.model) 
-            answer =  response.choices[0]
+                response = openai_api.get_answer(play.question, play.model)
+            answer = response.choices[0]
             play.model = response.model
-            play.answer=answer.text
+            play.answer = answer.text
             play.full_response = str(response)
             print("response:", response)
             play.save()
-            context = {"form": form, "response": response, "answer": answer} 
-            return redirect("play/"+str(play.id))  
+            context = {"form": form, "response": response, "answer": answer}
+            return redirect("play/"+str(play.id))
     return render(request, "hello/log_message.html", {"form": form})
 
 
@@ -101,6 +105,8 @@ def openai_play_detail(request, id):
 
 
 def openai_play_delete(request, id):
+    if not validate_login(request):
+        return HttpResponseRedirect("/login")
     # dictionary for initial data with
     # field names as keys
     context = {}
@@ -118,6 +124,39 @@ def openai_play_delete(request, id):
 
     return render(request, "hello/openai_play_delete.html", context)
 
+def validate_login(request):
+    try:
+        if request.session['user_id'] is not None: 
+            return True 
+    except KeyError: 
+        pass
+    return False 
+
+def login(request):
+    form = LoginForm(request.POST or None)
+    context = {}  
+    if request.method == "POST":
+        try:
+            if request.POST['username'] == "admin" and request.POST['password'] == "admin123":
+                request.session['user_id'] = 123
+                return HttpResponseRedirect('/')
+
+            m = User.objects.get(username=request.POST['username'])
+            if m.password == request.POST['password']:
+                request.session['user_id'] = m.id
+                return HttpResponseRedirect('/')
+        except  KeyError:
+            context["error"] = "Your username and password didn't match."
+
+    context["form"]=form 
+    return render(request, "hello/login.html", context)
+
+def logout(request):
+    try:
+        del request.session['user_id']
+    except KeyError:
+        pass
+    return HttpResponseRedirect('/')
 
 def log_message(request):
     form = LogMessageForm(request.POST or None)

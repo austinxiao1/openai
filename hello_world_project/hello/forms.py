@@ -1,6 +1,7 @@
 from django import forms
 
-from hello.models import LogMessage, OpenAIPlay
+from hello.models import LogMessage, OpenAIPlay, User
+
 
 class LogMessageForm(forms.ModelForm):
     class Meta:
@@ -8,7 +9,7 @@ class LogMessageForm(forms.ModelForm):
         fields = ("message",)  # NOTE: the trailing comma is required
 
 
-class OpenAIPlayForm(forms.ModelForm): 
+class OpenAIPlayForm(forms.ModelForm):
     question = forms.CharField(
         required=True,
         widget=forms.widgets.Textarea(
@@ -22,4 +23,11 @@ class OpenAIPlayForm(forms.ModelForm):
 
     class Meta:
         model = OpenAIPlay
-        fields = ("question", "model", "category")  # NOTE: the trailing comma is required
+        # NOTE: the trailing comma is required
+        fields = ("question", "model", "category")
+
+
+class LoginForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ("username", "password")

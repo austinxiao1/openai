@@ -16,4 +16,6 @@ urlpatterns = [
     path("openai/play_create", views.openai_play_create, name="openai_play"),
     path("openai/play_list", views.openai_play_list, name="openai_play_list"),
     path("log/", views.log_message, name="log"),
+    path("login/", views.login, name="login"),
+    path("logout/", views.logout, name="logout"),
 ]

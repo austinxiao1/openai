@@ -41,3 +41,9 @@ class OpenAIPlay(models.Model):
         """Returns a string representation of a message."""
         date = timezone.localtime(self.create_date)
         return f"'{self.question}' created on {date.strftime('%A, %d %B, %Y at %X')}"
+
+class User(models.Model):
+    username=models.CharField(max_length=64)
+    password=models.CharField(max_length=64)
+    def __str__(self):
+        return self.username
