@@ -2,9 +2,8 @@ import os
 import openai
 
 openai.organization = "org-547KC0rnKSUBHnVItpy5Z1kf"
-openai.api_key = "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"
-
-
+# openai.api_key = "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"
+openai.api_key = "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" 
 def get_model_list():
     return openai.Model.list()
 
