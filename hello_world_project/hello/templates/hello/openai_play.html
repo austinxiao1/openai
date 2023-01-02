@@ -1,0 +1,24 @@
+{% extends "hello/layout.html" %}
+{% block title %}
+Log a message
+{% endblock %}
+{% block content %}
+<form action="" method="POST" class="log-form">
+    {% csrf_token %}
+    {% for fm in form %}
+    <div>
+        <label>{{fm.label}}</label>
+        <div>{{fm}}</div>
+    </div>
+    {% endfor %}
+    <button type="submit" class="save btn btn-default">Submit</button>
+
+    <div>Answer</div>
+    <div>{{answer.text}}</div>
+
+
+    <div> Detail Response: </div> 
+    <div> {{response}}</div> 
+</form>
+
+{% endblock %}

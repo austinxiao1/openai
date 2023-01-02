@@ -1,0 +1,27 @@
+
+{% extends "hello/layout.html" %}
+{% block title %}
+Log a message
+{% endblock %}
+{% block content %}
+
+<div class="main">
+    <!-- Create a Form -->
+    <div class="main"> 
+        <!-- Specify fields to be displayed -->
+        {{ data.question }}<br/>
+        {{ data.answer }}<br/>
+        {{ data.model }}<br/>
+        {{ item.create_date | date:'d M Y' }}<br/> 
+    </div>
+
+    <form method="POST">
+        <!-- Security token by Django -->
+        {% csrf_token %}
+        Are you want to delete this item ?
+        <input type="submit" value="Yes" />
+        <a href="/openai/play_list">Cancel </a>
+    </form>
+</div>
+
+{% endblock %}

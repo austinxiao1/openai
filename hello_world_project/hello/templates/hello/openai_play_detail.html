@@ -1,0 +1,17 @@
+{% extends "hello/layout.html" %}
+{% block title %}
+Home
+{% endblock %}
+{% block content %}
+<h2>Question Detail</h2>
+<div class="main">
+    <!-- Specify fields to be displayed -->
+    <b>Question: </b>{{ data.question }}<br />
+    <div><textarea rows="40" cols="100">{{ data.answer }}</textarea><br />
+    <b>Model: </b>{{ data.model }}<br />
+    <b>Date: </b>   {{ data.create_date | date:'d M Y' }}<br />
+
+        <div><b>Detail Response:</b>  </div>
+        <div> {{data.full_response}}</div>
+    </div>
+    {% endblock %}

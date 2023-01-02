@@ -1,0 +1,40 @@
+{% extends "hello/layout.html" %}
+{% block title %}
+    Home
+{% endblock %}
+{% block content %}
+    <h2>OPENAI models</h2>
+
+    {% if model_list %}
+        <table class="message_list">
+            <thead>
+            <tr>
+                <th>id</th>
+                <th>object</th>
+                <th>owned by</th>
+                <th>permission</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for model in model_list %}
+                <tr>
+                    <td>
+                        {{ model.id }}
+                    </td> 
+                    <td>
+                        {{ model.object }}
+                    </td>
+                    <td>
+                        {{ model.owned_by }}
+                    </td>
+                    <td>
+                        {{ model.permission }}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No model found.</p>
+    {% endif %}
+{% endblock %}

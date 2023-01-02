@@ -1,0 +1,17 @@
+{% extends "hello/layout.html" %}
+{% block title %}
+    Home
+{% endblock %}
+{% block content %}
+    <h2>Logged messages</h2>
+
+    <div>
+        <a href="{% url 'openai_models' %}" class="navbar-item">Open AI Models</a>
+    </div>
+    <div>
+        <a href="{% url 'openai_play_list' %}" class="navbar-item">Open AI Question List</a>
+    </div>
+    <div>
+        <a href="{% url 'openai_play' %}" class="navbar-item">Open AI Question Submit</a>
+    </div> 
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends "hello/layout.html" %}
+{% block title %}
+Home
+{% endblock %}
+{% block content %}
+<h2>Question List</h2>
+
+{% if play_list %}
+<table class="message_list">
+    <thead>
+        <tr>
+            <th>Question</th>
+            <th>Answer</th>
+            <th>Model</th>
+            <th>Category</th>
+            <th>Date</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in play_list %} 
+        <tr>
+            <td>
+                <a href="/openai/play/{{ item.id }}">{{ item.question }}</a>
+            </td>
+            <td>
+                {{ item.answer.split.0 }}
+                {{ item.answer.split.1 }}
+                {{ item.answer.split.2 }}
+                {{ item.answer.split.3 }}
+                {{ item.answer.split.4 }} ...
+            </td>
+            <td>
+                {{ item.model }}
+            </td>
+            <td>
+                {{ item.category }}
+            </td>
+            <td>{{ item.create_date | date:'d M Y' }}</td>
+            <td><a href="/openai/play/{{ item.id }}/delete">delete</a></a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endif %}
+<p> Use the <a href="{% url 'openai_play' %}">Submit question</a>.</p>
+{% endblock %}
