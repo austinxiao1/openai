@@ -7,18 +7,13 @@ Log a message
     {% csrf_token %}
     {% for fm in form %}
     <div>
-        <label>{{fm.label}}</label>
+        <div>{{fm.label}}</div>
         <div>{{fm}}</div>
     </div>
     {% endfor %}
+    <br/>
     <button type="submit" class="save btn btn-default">Submit</button>
-
-    <div>Answer</div>
-    <div>{{answer.text}}</div>
-
-
-    <div> Detail Response: </div> 
-    <div> {{response}}</div> 
+ 
 </form>
 
 {% endblock %}

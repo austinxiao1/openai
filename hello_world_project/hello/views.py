@@ -68,10 +68,17 @@ def openai_play_create(request):
             play.create_date = datetime.now()
 
             print("asking question:", play.question)
-            if play.model == "code-davinci-002":
-                response = openai_api.get_code(play.question, play.model)
-            else:
+            if play.category == "Q&A":
                 response = openai_api.get_answer(play.question, play.model)
+            elif play.category=="Summarize for a 2nd grader":
+                response = openai_api.get_summarization(play.question, play.model) 
+            elif play.category=="Code Generation":
+                response = openai_api.get_code(play.question, play.model)
+            elif play.category=="Keyword":
+                response = openai_api.get_answer(play.question, play.model)
+            else: 
+                response = openai_api.get_answer(play.question, play.model)
+
             answer = response.choices[0]
             play.model = response.model
             play.answer = answer.text
@@ -80,7 +87,9 @@ def openai_play_create(request):
             play.save()
             context = {"form": form, "response": response, "answer": answer}
             return redirect("play/"+str(play.id))
-    return render(request, "hello/log_message.html", {"form": form})
+        else:
+            print("form is invalid")
+    return render(request, "hello/openai_play.html", {"form": form})
 
 
 def openai_play_list(request):

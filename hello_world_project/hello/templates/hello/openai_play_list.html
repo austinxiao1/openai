@@ -18,10 +18,11 @@ Home
         </tr>
     </thead>
     <tbody>
-        {% for item in play_list %} 
+        {% for item in play_list %}
         <tr>
             <td>
-                <a href="/openai/play/{{ item.id }}">{{ item.question }}</a>
+                <a href="/openai/play/{{ item.id }}"> {{ item.question.split.0 }} {{ item.question.split.1}} 
+                    {{item.question.split.2 }} {{ item.question.split.3 }} {{ item.question.split.4 }} {{ item.question.split.5 }}</a>
             </td>
             <td>
                 {{ item.answer.split.0 }}

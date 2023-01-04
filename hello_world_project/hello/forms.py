@@ -16,6 +16,8 @@ class OpenAIPlayForm(forms.ModelForm):
             attrs={
                 "placeholder": "question ...",
                 "class": "textarea is-success is-medium",
+                'rows':20,'cols': 100,
+
             }
         ),
         label="Question",

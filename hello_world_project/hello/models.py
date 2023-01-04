@@ -13,7 +13,7 @@ OPEN_AI_QUESTION_CATEGORY = [
     ("Summarize for a 2nd grader", "Summarize for a 2nd grader"),
     ("Text to command", 'Text to command'),
     ("Keywords", "Keywords"),
-    ("Code", "Code Generation")
+    ("Code Generation", "Code Generation")
 ]
 
 
@@ -28,7 +28,7 @@ class LogMessage(models.Model):
 
 
 class OpenAIPlay(models.Model):
-    question = models.CharField(max_length=300)
+    question = models.CharField(max_length=30000)
     model = models.CharField(choices=OPEN_AI_MODELS,
                              max_length=300, default="text-davinci-003")
     answer = models.TextField(help_text="text from open ai", default="")
