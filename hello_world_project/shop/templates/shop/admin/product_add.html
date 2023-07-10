@@ -1,0 +1,18 @@
+{% extends "shop/admin/layout.html" %}
+{% block title %}
+    Add a new Product
+{% endblock %}
+{% block content %}
+    <form method="POST" class="log-form">
+        {% csrf_token %}
+        {% for fm in form %}
+        <div>
+            <div>{{fm.label}}</div>
+            <div>{{fm}}</div>
+        </div>
+        {% endfor %}
+        <br/>
+        <button type="submit" class="save btn btn-default">Submit</button>
+     
+    </form>
+{% endblock %}

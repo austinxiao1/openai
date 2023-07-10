@@ -1,0 +1,47 @@
+{% extends "shop/admin/layout.html" %}
+{% block title %}
+Home
+{% endblock %}
+{% block content %}
+<h2>Product List</h2>
+
+{% if play_list %}
+<table class="message_list">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Code</th>
+            <th>Order</th>
+            <th>Unit Price</th>
+            <th>Create Date</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in product_list %}
+        <tr>
+            <td>
+                {{item.name}}
+            <td>
+            <td>
+                {{ item.product_code }}
+            </td>
+            <td>
+                {{ item.order }}
+            </td>
+            <td>
+                {{ item.unit_price }}
+            </td>
+            <td>
+                {{ item.product_code }}
+            </td>
+            <td>{{ item.created_at | date:'d M Y' }}</td>
+            <td> delete </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endif %}
+<p> Use the <a href="{% url 'admin_product_add' %}">Add Product</a>.</p>
+{% endblock %}
